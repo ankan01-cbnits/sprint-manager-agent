@@ -42,7 +42,7 @@ def blocker_node(state: SprintState) -> dict:
     if "blocker" not in state.get("agents_to_run", []):
         return {"blocker_output": None}
 
-    sprint_json = json.dumps(get_blocker_data(), indent=2)
+    sprint_json = json.dumps(get_blocker_data(state.get("sprint_data")), indent=2)
 
     history_text = ""
     if state.get("chat_history"):

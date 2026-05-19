@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List
 from src.graph.workflow import sprint_graph
+from dotenv import load_dotenv
+
 
 app = FastAPI(title="Sprint Analyzer AI")
 

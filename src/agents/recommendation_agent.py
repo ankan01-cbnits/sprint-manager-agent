@@ -40,7 +40,7 @@ def recommendation_node(state: SprintState) -> dict:
     if "recommendation" not in state.get("agents_to_run", []):
         return {"recommendation_output": None}
 
-    sprint_json = json.dumps(get_recommendation_data(), indent=2)
+    sprint_json = json.dumps(get_recommendation_data(state.get("sprint_data")), indent=2)
 
     # Pull in context from other agents if available
     extra_context = ""

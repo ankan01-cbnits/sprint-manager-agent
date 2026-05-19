@@ -28,6 +28,12 @@ Rules:
 - Be specific about story points, assignees, and statuses
 - Do not speculate beyond what the data says
 - Format clearly using markdown with ticket IDs bold
+- Use icons in front of tickets -{
+  Story: "bookmark",
+  Task: "check-square",
+  Bug: "bug",
+  Epic: "layers"
+};
 - Use maximum 1000 tokens
 """
 
@@ -35,7 +41,7 @@ def todo_node(state: SprintState) -> dict:
     if "todo" not in state.get("agents_to_run", []):
         return {"todo_output": None}
 
-    sprint_json = json.dumps(get_todo_data(), indent=2)
+    sprint_json = json.dumps(get_todo_data(state.get("sprint_data")), indent=2)
 
     # Include chat history for follow-up awareness
     history_text = ""

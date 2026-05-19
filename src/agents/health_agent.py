@@ -77,7 +77,7 @@ def health_node(state: SprintState) -> dict:
     if "health" not in state.get("agents_to_run", []):
         return {"health_output": None}
 
-    sprint_json = json.dumps(get_health_data(), indent=2)
+    sprint_json = json.dumps(get_health_data(state.get("sprint_data")), indent=2)
     
 
     history_text = ""

@@ -11,7 +11,8 @@ from src.data.mock_jira import get_sprint_data
 
 def load_data_node(state: SprintState) -> dict:
     """First node — loads sprint data into shared state once."""
-    return {"sprint_data": get_sprint_data()}
+    data = get_sprint_data()
+    return {"sprint_data":data}
 
 
 def route_agents(state: SprintState) -> list[str]:
