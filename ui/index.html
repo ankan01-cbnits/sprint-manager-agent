@@ -1105,6 +1105,9 @@
         <button class="icon-btn" type="button" onclick="focusComposer()" title="Focus composer" aria-label="Focus composer">
           <i data-lucide="message-square-plus"></i>
         </button>
+        <button class="icon-btn" type="button" onclick="reloadPage()" title="Reload page" aria-label="Reload page">
+          <i data-lucide="refresh-cw"></i>
+        </button>
         <button class="icon-btn" id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
           <i data-lucide="moon"></i>
         </button>
@@ -1389,6 +1392,10 @@
 
     function focusComposer() {
       input.focus();
+    }
+
+    function reloadPage() {
+      window.location.reload();
     }
 
     function appendUserMessage(text) {
