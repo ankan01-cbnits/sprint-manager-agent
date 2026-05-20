@@ -14,11 +14,15 @@ PROJECT = os.getenv("JIRA_PROJECT_KEY")
 AUTH    = HTTPBasicAuth(EMAIL, TOKEN)
 HEADERS = {"Accept": "application/json"}
 
-
 def _get(url: str, params: dict = {}) -> dict:
-    res = requests.get(url, headers=HEADERS, auth=AUTH, params=params)
-    res.raise_for_status()
-    return res.json()
+    try:
+        res = requests.get(url, headers=HEADERS, auth=AUTH, params=params, timeout=10)
+        res.raise_for_status()
+        return res.json()
+    except requests.Timeout:
+        raise Exception("Jira API timed out. Check your connection.")
+    except requests.ConnectionError:
+        raise Exception("Cannot reach Jira. Check your internet connection.")
 
 
 def _extract_text(adf) -> str:
@@ -215,3 +219,45 @@ def get_full_sprint_data() -> dict:
         "meta":   meta,
         "issues": issues,
     }
+
+
+def create_issue(summary: str, issue_type: str, priority: str,
+                 story_points: int, labels: list) -> dict:
+    """Creates a Jira issue and returns the new issue key."""
+    url = f"{DOMAIN}/rest/api/3/issue"
+    body = {
+        "fields": {
+            "project":           {"key": PROJECT},
+            "summary":           summary,
+            "issuetype":         {"name": issue_type},
+            "priority":          {"name": priority},
+            "labels":            labels,
+            "customfield_10016": float(story_points),
+        }
+    }
+    res = requests.post(
+        url,
+        headers={**HEADERS, "Content-Type": "application/json"},
+        auth=AUTH,
+        json=body,
+        timeout=10
+    )
+    res.raise_for_status()
+    return res.json()
+
+
+def add_issue_to_sprint(issue_key: str, sprint_id: str) -> bool:
+    """Adds an existing issue into the active sprint."""
+    url  = f"{DOMAIN}/rest/agile/1.0/sprint/{sprint_id}/issue"
+    body = {"issues": [issue_key]}
+    res  = requests.post(
+        url,
+        headers={**HEADERS, "Content-Type": "application/json"},
+        auth=AUTH,
+        json=body,
+        timeout=10
+    )
+    try:
+        return res.status_code == 204
+    except:
+        raise Exception("Failed to add key")

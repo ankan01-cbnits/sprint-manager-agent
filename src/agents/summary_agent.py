@@ -80,6 +80,8 @@ def summary_node(state: SprintState) -> dict:
         sections.append(f"=== BLOCKER DATA ===\n{state['blocker_output']}")
     if state.get("recommendation_output"):
         sections.append(f"=== RECOMMENDATION DATA ===\n{state['recommendation_output']}")
+    if state.get("create_output"):
+        sections.append(f"=== CREATE TICKET RESULT ===\n{state['create_output']}")
 
     combined = "\n\n".join(sections)
 
@@ -107,5 +109,7 @@ Now respond to the user in a natural, conversational way based on this data.
         {"role": "system", "content": SUMMARY_PROMPT},
         {"role": "user", "content": message},
     ])
+
+    # print(response)
 
     return {"final_answer": response.content}

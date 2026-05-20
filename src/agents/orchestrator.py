@@ -18,6 +18,7 @@ Available agents:
 - "health"          → Sprint velocity, burndown, completion %, risk of missing sprint goal
 - "blocker"         → Blockers, impediments, stuck tickets, cascade dependencies, at-risk items
 - "recommendation"  → Suggestions, prioritization advice, what to focus on, process improvements
+- "create"          → Creates tickets , adds it to current sprint 
 
 Routing rules — be surgical, not thorough:
 - "what are the todos / in progress / done / tasks" → ["todo"]
@@ -27,6 +28,7 @@ Routing rules — be surgical, not thorough:
 - "full report / overview / summary of sprint" → ["todo", "health", "blocker", "recommendation"]
 - "why is X blocked / what is blocking Y" → ["blocker"]
 - "who is overloaded / workload" → ["todo", "recommendation"]
+- "create / add ticket / new task / new bug / new story / create a ticket" → ["create"]
 - "will we finish / can we complete sprint" → ["health", "blocker"]
 - Follow-up questions → infer from chat history which agents are relevant
 
@@ -69,8 +71,12 @@ Which agents should handle this query?
         raw = raw.split("```")[1]
         if raw.startswith("json"):
             raw = raw[4:]
-
-    parsed = json.loads(raw.strip())
+    try:
+        parsed = json.loads(raw.strip())
+    except:
+        return {
+            "agents_to_run":["todo"]
+        }
 
     return {
         "agents_to_run": parsed["agents_to_run"],

@@ -1,11 +1,23 @@
-from src.data.jira_client import get_full_sprint_data
+from src.data.jira_client import create_issue, add_issue_to_sprint, get_active_sprint
+from dotenv import load_dotenv
 
-data = get_full_sprint_data()
+load_dotenv()
 
-print("\n--- SPRINT META ---")
-for k, v in data["meta"].items():
-    print(f"  {k}: {v}")
+# Step 1 — test create issue
+print("Creating issue...")
+result = create_issue(
+    summary      = "Test ticket from API",
+    issue_type   = "Bug",
+    priority     = "High",
+    story_points = 3,
+    labels       = ["test"],
+)
+print("Create result:", result)
 
-print(f"\n--- ISSUES ({len(data['issues'])}) ---")
-for i in data["issues"]:
-    print(f"  {i['id']} | {i['status']:<12} | {i['priority']:<8} | {i['story_points']}pts | {i['summary'][:50]}")
+# Step 2 — test add to sprint
+issue_key = result.get("key")
+print(f"\nAdding {issue_key} to sprint...")
+sprint = get_active_sprint()
+print("Sprint:", sprint["sprint_name"], "ID:", sprint["sprint_id"])
+added = add_issue_to_sprint(issue_key, sprint["sprint_id"])
+print("Added to sprint:", added)

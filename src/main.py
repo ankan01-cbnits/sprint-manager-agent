@@ -47,6 +47,7 @@ async def analyze(req: QueryRequest):
         "health_output": None,
         "blocker_output": None,
         "recommendation_output": None,
+        "create_output": None,
         "final_answer": "",
     }
 

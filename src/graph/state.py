@@ -19,5 +19,8 @@ class SprintState(TypedDict):
     blocker_output: Optional[str]
     recommendation_output: Optional[str]
 
+    #create ticket
+    create_output: Optional[str]
+
     # Final synthesized answer
     final_answer: str

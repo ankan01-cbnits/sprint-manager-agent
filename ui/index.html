@@ -623,6 +623,7 @@
     .agent-tag.todo { color: #0747a6; border-color: #b3d4ff; background: #deebff; }
     .agent-tag.health { color: #006644; border-color: #abf5d1; background: #e3fcef; }
     .agent-tag.blocker { color: #bf2600; border-color: #ffbdad; background: #ffebe6; }
+    .agent-tag.create { color: #005c70; border-color: #9dd9ee; background: #e6fcff; }
     .agent-tag.recommendation { color: #7a4f01; border-color: #ffe380; background: #fff0b3; }
     .agent-tag.summary { color: #403294; border-color: #c0b6f2; background: #eae6ff; }
 
@@ -649,6 +650,12 @@
       color: #ff9c8f;
       border-color: #ae2e24;
       background: #42120b;
+    }
+
+    [data-theme="dark"] .agent-tag.create {
+      color: #9dd9ee;
+      border-color: #227d9b;
+      background: #073844;
     }
 
     [data-theme="dark"] .agent-tag.summary {
@@ -1228,6 +1235,10 @@
               <div class="agent-icon"><i data-lucide="triangle-alert"></i></div>
               <div class="agent-copy"><strong>Blocker Agent</strong><span>Stalls and dependencies</span></div>
             </div>
+            <div class="agent-row" data-agent="create">
+              <div class="agent-icon"><i data-lucide="square-plus"></i></div>
+              <div class="agent-copy"><strong>Create Agent</strong><span>Creates Jira sprint tickets</span></div>
+            </div>
             <div class="agent-row" data-agent="recommendation">
               <div class="agent-icon"><i data-lucide="sparkles"></i></div>
               <div class="agent-copy"><strong>Recommendation Agent</strong><span>Prioritized next actions</span></div>
@@ -1259,6 +1270,7 @@
       todo: "Task Agent",
       health: "Health Agent",
       blocker: "Blocker Agent",
+      create: "Create Agent",
       recommendation: "Recommendation Agent"
     };
 
@@ -1266,6 +1278,7 @@
       todo: "list-todo",
       health: "chart-no-axes-combined",
       blocker: "triangle-alert",
+      create: "square-plus",
       recommendation: "sparkles",
       summary: "messages-square"
     };
